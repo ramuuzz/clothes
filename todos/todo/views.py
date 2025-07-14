@@ -43,5 +43,5 @@ def shirt(request):
     else:
         form = ShirtForm()
     shirts = request.user.shirts.all()
-    return render(request, 'shirt.html', {'form': form, 'shirts': shirts})
+    return render(request, 'home.html', {'form': form, 'shirts': shirts})
 # Create your views here.

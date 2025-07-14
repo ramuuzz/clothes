@@ -469,22 +469,15 @@
     <div class="container">
       <h2 class="section-title">Featured Products</h2>
       <div class="product-grid">
-        {% for mens_items in mens_items%}
-        {% if forloop.counter <= 3 %}
-        <div class="product-card">
-          <div class="product-image">
-            <img src="{{mens_items.image.url}}" alt="Product 1">
-          </div>
-          <div class="product-info">
-            <h3 class="product-title"> {{mens_items.name}}</h3>
-            <div class="product-price">{{mens_items.price}}</div>
-            <p class="product-description">{{mens_items.description}}</p>
-
-            <button class="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-        {% endif %}
-        {% endfor %}
+       <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+      </form>
+      <h2>My Shirts</h2>
+      {% for shirt in shirts %}
+          <img src="{{ shirt.image.url }}" alt="shirt image" width="150">
+      {% endfor %}
         
       
        
