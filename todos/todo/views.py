@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import ShirtForm, PantsForm, JacketForm
 from django.contrib.auth import authenticate, login as login1, logout as logout1
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -29,5 +30,18 @@ def login(request):
 def logout(request):
     logout1(request)#logout user defined func and logout django func should have different name
     return redirect('home')
-   
+
+@login_required
+def shirt(request):  
+    if request.method == 'POST':
+        form = ShirtForm(request.POST, request.FILES)
+        if form.is_valid():
+            shirt = form.save(commit=False)
+            shirt.user = request.user
+            shirt.save()
+            return redirect('shirt')
+    else:
+        form = ShirtForm()
+    shirts = request.user.shirts.all()
+    return render(request, 'shirt.html', {'form': form, 'shirts': shirts})
 # Create your views here.
